@@ -1,0 +1,19 @@
+{
+  "name": "gitbook-plugin-theme-document",
+  "version": "1.0.0",
+  "description": "gitbook-plugin-theme-document",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rain-yu/gitbook-plugin-theme-document.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rain-yu/gitbook-plugin-theme-document/issues"
+  },
+  "homepage": "https://github.com/rain-yu/gitbook-plugin-theme-document#readme"
+}
