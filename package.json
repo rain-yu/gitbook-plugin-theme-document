@@ -1,19 +1,81 @@
 {
-  "name": "gitbook-plugin-theme-document",
-  "version": "1.0.0",
-  "description": "gitbook-plugin-theme-document",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "_args": [
+    [
+      {
+        "hosted": {
+          "directUrl": "https://raw.githubusercontent.com/rain-yu/gitbook-plugin-theme-document/v1.0.0/package.json",
+          "gitUrl": "git://github.com/rain-yu/gitbook-plugin-theme-document.git#v1.0.0",
+          "httpsUrl": "git+https://github.com/rain-yu/gitbook-plugin-theme-document.git#v1.0.0",
+          "shortcut": "github:rain-yu/gitbook-plugin-theme-document#v1.0.0",
+          "ssh": "git@github.com:rain-yu/gitbook-plugin-theme-document.git#v1.0.0",
+          "sshUrl": "git+ssh://git@github.com/rain-yu/gitbook-plugin-theme-document.git#v1.0.0",
+          "type": "github"
+        },
+        "name": "gitbook-plugin-theme-document",
+        "raw": "gitbook-plugin-theme-document@https://github.com/rain-yu/gitbook-plugin-theme-document#v1.0.0",
+        "rawSpec": "https://github.com/rain-yu/gitbook-plugin-theme-document#v1.0.0",
+        "scope": null,
+        "spec": "git+https://github.com/rain-yu/gitbook-plugin-theme-document.git#v1.0.0",
+        "type": "hosted"
+      },
+      ""
+    ]
+  ],
+  "_from": "git+https://github.com/rain-yu/gitbook-plugin-theme-document.git#v1.0.0",
+  "_id": "gitbook-plugin-theme-document@1.0.0",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/gitbook-plugin-theme-document",
+  "_phantomChildren": {},
+  "_requested": {
+    "hosted": {
+      "directUrl": "https://raw.githubusercontent.com/rain-yu/gitbook-plugin-theme-document/v1.0.0/package.json",
+      "gitUrl": "git://github.com/rain-yu/gitbook-plugin-theme-document.git#v1.0.0",
+      "httpsUrl": "git+https://github.com/rain-yu/gitbook-plugin-theme-document.git#v1.0.0",
+      "shortcut": "github:rain-yu/gitbook-plugin-theme-document#v1.0.0",
+      "ssh": "git@github.com:rain-yu/gitbook-plugin-theme-document.git#v1.0.0",
+      "sshUrl": "git+ssh://git@github.com/rain-yu/gitbook-plugin-theme-document.git#v1.0.0",
+      "type": "github"
+    },
+    "name": "gitbook-plugin-theme-document",
+    "raw": "gitbook-plugin-theme-document@https://github.com/rain-yu/gitbook-plugin-theme-document#v1.0.0",
+    "rawSpec": "https://github.com/rain-yu/gitbook-plugin-theme-document#v1.0.0",
+    "scope": null,
+    "spec": "git+https://github.com/rain-yu/gitbook-plugin-theme-document.git#v1.0.0",
+    "type": "hosted"
   },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "git+https://github.com/rain-yu/gitbook-plugin-theme-document.git#ba74afc2c7908272d05c3fdd0719452e72a1c781",
+  "_shasum": "963ca7729ef31f172bc223a7c05f42b9dfccbf3f",
+  "_shrinkwrap": null,
+  "_spec": "gitbook-plugin-theme-document@https://github.com/rain-yu/gitbook-plugin-theme-document#v1.0.0",
+  "_where": "",
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/rain-yu/gitbook-plugin-theme-document/issues"
+  },
+  "dependencies": {},
+  "description": "gitbook-plugin-theme-document",
+  "devDependencies": {},
+  "gitHead": "ba74afc2c7908272d05c3fdd0719452e72a1c781",
+  "homepage": "https://github.com/rain-yu/gitbook-plugin-theme-document#readme",
+  "license": "ISC",
+  "main": "index.js",
+  "name": "gitbook-plugin-theme-document",
+  "optionalDependencies": {},
+  "readme": "gitbook-plugin-theme-document\r\n",
+  "readmeFilename": "README.md",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rain-yu/gitbook-plugin-theme-document.git"
   },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/rain-yu/gitbook-plugin-theme-document/issues"
+  "engines": {
+    "gitbook": ">=3.0.0"
   },
-  "homepage": "https://github.com/rain-yu/gitbook-plugin-theme-document#readme"
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "1.0.0"
 }
