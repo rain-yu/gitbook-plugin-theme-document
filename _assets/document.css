@@ -133,23 +133,57 @@ body{
   overflow-y: auto;
   border-right: 1px solid #E9EBEE;
 }
-.doc-book__summary{
+.doc-book__summary > .book-summary{
   position: static;
   left: 0;
   top: 0;
   border-right: 0;
   background-color: transparent;
+  width: auto;
 }
-.doc-book__summary > .summary{
+.book-summary, .book-summary__item-menu{
   list-style: none;
   padding: 0;
   margin: 0;
 }
-.doc-book__summary > .summary .divider{
+.book-summary__item{
+  min-height: 40px;
+  position: relative;
+}
+.book-summary__item-link{
+  display: block;
+  height: 40px;
+  line-height: 40px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.book-summary__item-indent{
+  display: inline-block;
+  width: 1em;
+  height: 1px;
+}
+.book-summary__item-menu{
   display: none;
 }
-.doc-book__summary > .summary .divider + li{
-  display: none;
+.book-summary__item.has-submenu:after{
+  content: '';
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-right: 1px solid #BFBFBF;;
+  border-bottom: 1px solid #BFBFBF;;
+  transform: rotate(45deg);
+  position: absolute;
+  right: 12px;
+  top: 16px;
+}
+.book-summary__item.has-submenu.is-open:after{
+  transform: rotate(225deg);
+}
+.book-summary__item.is-active > .book-summary__item-menu,
+.book-summary__item.is-open > .book-summary__item-menu{
+  display: block;
 }
 .doc-footer{
   background-color: #232840; 

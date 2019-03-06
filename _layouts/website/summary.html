@@ -1,0 +1,53 @@
+{% macro articles(_articles) %}
+
+  {% for article in _articles %}
+
+      {% set chilIsCurrent = "" %}
+      {% for article2 in article.articles %}
+          {% set isChildCurrent = article2.path == file.path and not article2.anchor %}
+          {% if isChildCurrent and chilIsCurrent==""  %}
+              {% set chilIsCurrent = "is-open" %}
+          {% endif%}
+          {% for article3 in article2.articles %}
+              {% set isChildCurrent = article3.path == file.path and not article3.anchor %}
+              {% if isChildCurrent and chilIsCurrent==""  %}
+                  {% set chilIsCurrent = "is-open" %}
+              {% endif%}
+              {% for article4 in article3.articles %}
+                  {% set isChildCurrent = article4.path == file.path and not article4.anchor %}
+                  {% if isChildCurrent and chilIsCurrent==""  %}
+                      {% set chilIsCurrent = "is-open" %}
+                  {% endif%}
+              {% endfor%}  
+          {% endfor%}  
+      {% endfor%}  
+      {% set isCurrent = article.path == file.path and not article.anchor %}
+      {% set levels = article.level.split('.').slice(2)  %}
+      {% set hasChild = article.articles.length > 0 %}
+      {% set pageUrl = "javascript:;" %}
+      {% if article.path %}
+      {% set pageUrl =  article.path|resolveFile  %}
+      {% endif%}
+      {% if article.anchor %}
+      {% set pageUrl = pageUrl + article.anchor%}
+      {% endif%}
+      <li class="book-summary__item {% if hasChild%} has-submenu {{chilIsCurrent}}{% endif %} {% if isCurrent %}is-active{% endif %}">
+        <a class="book-summary__item-link" href="{{ pageUrl }}">
+          {% for indent in levels %}
+            <span class="book-summary__item-indent"></span>
+          {% endfor %}
+          {{ article.title }}
+        </a>
+        {% if hasChild %}
+        <ul class="book-summary__item-menu">
+            {{ articles(article.articles, file, config) }}
+        </ul>
+        {% endif %}  
+      </li>
+    {% endfor %}  
+{% endmacro %}
+<ul class="book-summary">
+    {% for part in summary.parts %}
+        {{ articles(part.articles, file, config) }}
+    {% endfor %}
+</ul>
