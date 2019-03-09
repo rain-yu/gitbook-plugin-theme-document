@@ -12,5 +12,12 @@ module.exports = {
         finish: function () {
             
         }
+    },
+    blocks: {
+        crumbs: {
+            process: function (block) {
+                console.log(block)
+            }
+        }
     }
 };

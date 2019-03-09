@@ -1,53 +1,67 @@
 {% macro articles(_articles) %}
-
-  {% for article in _articles %}
-
-      {% set chilIsCurrent = "" %}
-      {% for article2 in article.articles %}
-          {% set isChildCurrent = article2.path == file.path and not article2.anchor %}
-          {% if isChildCurrent and chilIsCurrent==""  %}
-              {% set chilIsCurrent = "is-open" %}
-          {% endif%}
-          {% for article3 in article2.articles %}
-              {% set isChildCurrent = article3.path == file.path and not article3.anchor %}
-              {% if isChildCurrent and chilIsCurrent==""  %}
-                  {% set chilIsCurrent = "is-open" %}
-              {% endif%}
-              {% for article4 in article3.articles %}
-                  {% set isChildCurrent = article4.path == file.path and not article4.anchor %}
-                  {% if isChildCurrent and chilIsCurrent==""  %}
-                      {% set chilIsCurrent = "is-open" %}
-                  {% endif%}
-              {% endfor%}  
-          {% endfor%}  
-      {% endfor%}  
-      {% set isCurrent = article.path == file.path and not article.anchor %}
-      {% set levels = article.level.split('.').slice(2)  %}
-      {% set hasChild = article.articles.length > 0 %}
-      {% set pageUrl = "javascript:;" %}
-      {% if article.path %}
-      {% set pageUrl =  article.path|resolveFile  %}
-      {% endif%}
-      {% if article.anchor %}
-      {% set pageUrl = pageUrl + article.anchor%}
-      {% endif%}
-      <li class="book-summary__item {% if hasChild%} has-submenu {{chilIsCurrent}}{% endif %} {% if isCurrent %}is-active{% endif %}">
-        <a class="book-summary__item-link" href="{{ pageUrl }}">
-          {% for indent in levels %}
-            <span class="book-summary__item-indent"></span>
-          {% endfor %}
-          {{ article.title }}
-        </a>
-        {% if hasChild %}
-        <ul class="book-summary__item-menu">
-            {{ articles(article.articles, file, config) }}
-        </ul>
-        {% endif %}  
-      </li>
-    {% endfor %}  
-{% endmacro %}
-<ul class="book-summary">
-    {% for part in summary.parts %}
-        {{ articles(part.articles, file, config) }}
+    {% for article in _articles %}
+        {% set levels = article.level.split('.').slice(1) %}
+        {% set chilIsCurrent = "" %}
+        {% for article2 in article.articles %}
+            {% set isChildCurrent = article2.path == file.path and not article2.anchor %}
+            {% if isChildCurrent and chilIsCurrent==""  %}
+                {% set chilIsCurrent = "is-open" %}
+            {% endif%}
+            {% for article3 in article2.articles %}
+                {% set isChildCurrent = article3.path == file.path and not article3.anchor %}
+                {% if isChildCurrent and chilIsCurrent==""  %}
+                    {% set chilIsCurrent = "is-open" %}
+                {% endif%}
+                {% for article4 in article3.articles %}
+                    {% set isChildCurrent = article4.path == file.path and not article4.anchor %}
+                    {% if isChildCurrent and chilIsCurrent==""  %}
+                        {% set chilIsCurrent = "is-open" %}
+                    {% endif%}
+                {% endfor%}  
+            {% endfor%}  
+        {% endfor%} 
+        <li class="doc-book-summary__item chapter {% if article.path == file.path and not article.anchor %}is-active{% endif %} {% if article.articles and article.articles.length %}has-submenu{% endif %} {{chilIsCurrent}}" data-level="{{ article.level }}" {% if article.path %}data-path="{{ article.path|resolveFile }}"{% endif %}>
+            {% if article.path and getPageByPath(article.path) and article.articles.length <= 0 %}
+                <a class="doc-book-summary__handle" title="{{article.title}}" href="{{ article.path|resolveFile }}{{ article.anchor }}">
+            {% else %}
+                <span class="doc-book-summary__handle" title="{{article.title}}">
+            {% endif %}
+                {% for indent in levels %}
+                    <span class="doc-book-summary__indent"></span>
+                {% endfor %}
+                <span class="doc-book-summary__text">{{ article.title }}</span>
+            {% if article.path  and article.articles.length <= 0 %}</a>{% else %}</span>{% endif %}
+            {% if article.articles.length > 0 %}
+                <ul class="doc-book-summary__submenu">
+                    {{ articles(article.articles, file, config) }}
+                </ul>
+            {% endif %}
+        </li>
     {% endfor %}
-</ul>
+{% endmacro %}
+
+<div class="doc-book-summary">
+    <div class="doc-book-summary__select">
+        <div class="doc-book-summary__select-handle">
+            全部文档
+        </div>
+        <ul class="doc-book-summary__select-list">
+            {% for part in summary.parts %}
+                {% for article in part.articles %}
+                    {% if article.articles.length > 0 %}
+                    <li class="doc-book-summary__select-item">
+                        {{article.title}}
+                    </li>
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="doc-book-summary__wrap">
+        <ul class="summary">
+            {% for part in summary.parts %}
+                {{ articles(part.articles, file, config) }}
+            {% endfor %}
+        </ul>
+    </div>
+</div>

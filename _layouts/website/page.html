@@ -1,80 +1,107 @@
-{% extends template.self %}
+{% extends "./layout.html" %}
+
+{% block title %}{{ page.title }} · {{ super() }}{% endblock %}
+
+{% block description %}{{ page.description }}{% endblock %}
+
+{% block head %}
+    {{ super() }}
+    {% if page.next and page.next.path %}
+    <link rel="next" href="{{ page.next.path|resolveFile }}" />
+    {% endif %}
+    {% if page.previous and page.previous.path %}
+    <link rel="prev" href="{{ page.previous.path|resolveFile }}" />
+    {% endif %}
+{% endblock %}
+
+{% block javascript %}
+    <script src="{{ "gitbook.js"|resolveAsset }}"></script>
+    <script src="{{ "theme.js"|resolveAsset }}"></script>
+    {% for resource in plugins.resources.js %}
+        {% if resource.url %}
+        <script src="{{ resource.url }}"></script>
+        {% else %}
+        <script src="{{ resource.path|resolveAsset }}"></script>
+        {% endif %}
+    {% endfor %}
+{% endblock %}
+
 {% block body %}
 <div class="doc doc--{{book.name}}">
-	<header class="doc-header">
-		<div class="doc-header__inner">
-			{% if book.name === 'platform' %}
-				<div class="doc-title">
-					<span class="doc-title__image">明源云</span>
-					<span class="doc-title__sub">{{ book.title }}</span>
-				</div>
-			{% else %}
-				<div class="doc-title">
-					{{ book.title }}
-				</div>
-			{% endif %}
-			<ul class="doc-header-nav">
-				{% for mainNav in book.navigation %}
-				{% if mainNav.children %}<li class="has-submenu">{% else %}<li>
-				{% endif %}
-					<a href="{{mainNav.url}}" target="{{ mainNav.target}}">{{ mainNav.text }}</a>
-					{% if mainNav.children %}
-						<ul class="doc-header-nav__sub">
-							{% for subNav in mainNav.children %}
-							<li>
-									<a href="{{subNav.url}}" target="{{ subNav.target}}">{{ subNav.text }}</a>
-							</li>
-							{% endfor %}
-						</ul>
-					{% endif %}
-				</li>
-				{% endfor %}
-			</ul>
-			<span class="doc-header-links">
-				{% for link in book.links %}
-					<a class="doc-header-links__item" href="{{link.url}}" target="{{ link.target}}">{{ link.text }}</a>
-				{% endfor %}
-			</span>
-		</div>
-	</header>
-	<div class="doc-container doc-book book">
-		<div class="doc-book__sidebar">
-			{% block book_sidebar %}
-				{% block book_summary %}
-				<nav role="summary" class="doc-book__summary">
-					{% include "./summary.html" %}
-				</nav>
-				{% endblock %}
-			{% endblock %}
-		</div>
-		<div class="doc-book__main">
-			{% block book_body %}
-				<div class="body-inner">
-					{% block book_inner %}
-					<div class="page-wrapper" tabindex="-1" role="main">
-						<div class="page-inner">
-							{% block search_results %}
-							<section class="normal markdown-section">
-								{% block page %}
-								{{ page.content|safe }}
-								{% endblock %}
-							</section>
-							{% endblock %}
-						</div>
-					</div>
-					{% endblock %}
-				</div>
-			{% endblock %}
-		</div>
-	</div>
-	<footer class="doc-footer">
-		<div class="doc-copyright">{{ book.copyright }}</div>
-	</footer>
-	<script>
-		var gitbook = gitbook || [];
-		gitbook.push(function() {
-			gitbook.page.hasChanged({{ template.getJSContext()|dump|safe }});
-		});
-	</script>
+    <header class="doc-header">
+        <div class="doc-header__inner">
+            <div class="doc-title">
+                <span class="doc-title__logo">明源云</span>
+                <span class="doc-title__sub">{{ book.title }}</span>
+            </div>
+            <ul class="doc-header-nav">
+                {% for mainNav in book.navigation %}
+                {% if mainNav.children %}<li class="has-submenu">{% else %}<li>
+                {% endif %}
+                    <a href="{{mainNav.url}}" target="{{ mainNav.target}}">{{ mainNav.text }}</a>
+                    {% if mainNav.children %}
+                        <ul class="doc-header-nav__sub">
+                            {% for subNav in mainNav.children %}
+                            <li>
+                                    <a href="{{subNav.url}}" target="{{ subNav.target}}">{{ subNav.text }}</a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+            <span class="doc-header-links">
+                {% for link in book.links %}
+                    <a class="doc-header-links__item" href="{{link.url}}" target="{{ link.target}}">{{ link.text }}</a>
+                {% endfor %}
+            </span>
+        </div>
+    </header>
+    <div class="doc-container doc-book book">
+        <div class="doc-book__search">
+            <form class="doc-searchbox" action="{{ book.search.url }}" method="get" target="{{ book.search.target }}">
+                <input class="doc-searchbox__input" name="keyword" type="text" placeholder="请输入搜索关键词">
+                <input class="doc-searchbox__submit" type="submit" value="搜索">
+            </form>
+        </div>
+        <div class="doc-book__main">
+            <div class="doc-book__sidebar">
+                    <div class="doc-book__sidebar-fixed">
+                        {% block book_sidebar %}
+                            {% block search_input %}{% endblock %}
+                            {% block book_summary %}
+                                {% include "./summary.html" %}
+                            {% endblock %}
+                        {% endblock %}
+                    </div>
+                </div>
+                <div class="doc-book__container">
+                    <div class="doc-book__crumb"></div>
+                    {% block book_body %}
+                        <div class="doc-book__content">
+                            {% block book_inner %}
+                                {% block search_results %}
+                                    <section class="normal markdown-section">
+                                    {% block page %}
+                                    {{ page.content|safe }}
+                                    {% endblock %}
+                                    </section>
+                                {% endblock %}
+                            {% endblock %}
+                        </div>
+                    {% endblock %}
+                </div>
+        </div>
+    </div>
+    <footer class="doc-footer">
+        <div class="doc-copyright">{{ book.copyright }}</div>
+    </footer>
 </div>
+<script>
+    var gitbook = gitbook || [];
+    gitbook.push(function() {
+        gitbook.page.hasChanged({{ template.getJSContext()|dump|safe }});
+    });
+</script>
 {% endblock %}
